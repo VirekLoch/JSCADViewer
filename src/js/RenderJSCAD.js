@@ -148,6 +148,7 @@ function preventTreeShaking() {
     
 
     console.log('Prevent tree shaking using', primitives, utils, transforms, extrusions, booleans);
+    console.clear();
 }
 
 preventTreeShaking();
