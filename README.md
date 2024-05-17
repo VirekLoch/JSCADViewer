@@ -1,47 +1,31 @@
-# Astro Starter Kit: Minimal
+# JSCAD Playground
 
 ```sh
-npm create astro@latest -- --template minimal
+npm run dev
 ```
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/minimal)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/minimal)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/minimal/devcontainer.json)
-
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+> 🧑‍🚀 **Want to try it yourself?** Run the above command!
 
 ## 🚀 Project Structure
 
-Inside of your Astro project, you'll see the following folders and files:
+Inside, you'll see the following folder structure:
 
 ```text
 /
 ├── public/
 ├── src/
+│   └── components/
+│   └── data/
+│   └── js/
+│   └── layouts/
 │   └── pages/
-│       └── index.astro
+│       
 └── package.json
+└── taiwind.config.mjs
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+In the components/ folder, you will find individual components, each rendering a key element of the project. In data/, we have all the information for Monaco to interpret the new JSCAD commands. js/ contains the geometry converter. The layouts/ and pages/ folders unify the components and build the entire page.
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+## 👀 More Info
 
-Any static assets, like images, can be placed in the `public/` directory.
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+This project arose because I needed a good way to store code information without having to copy all the code and perform the corresponding renderings. In this project, we have the feature that the code is saved in the URL, so you will only have to save the link to access your code!
