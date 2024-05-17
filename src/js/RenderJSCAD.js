@@ -132,6 +132,7 @@ intersect,
 subtract,
 union
 }
+preventTreeShaking();
 
 function handleMessageFromChild(event ) {
     var txt = document.getElementById('marco')?.getAttribute("srcdoc");
