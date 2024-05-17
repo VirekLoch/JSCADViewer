@@ -72,65 +72,66 @@ union
 } from "@jscad/modeling/src/operations/booleans";
 
 function preventTreeShaking() {
-    arc();
-    circle();
-    cube();
-    cuboid();
-    cylinder();
-    cylinderElliptic();
-    ellipse();
-    ellipsoid();
-    geodesicSphere();
-    line();
-    polygon();
-    polyhedron();
-    rectangle();
-    roundedCuboid();
-    roundedCylinder();
-    roundedRectangle();
-    sphere();
-    square();
-    star();
-    torus();
-    triangle();
-    areAllShapesTheSameType();
-    degToRad();
-    flatten();
-    fnNumberSort();
-    insertSorted();
-    radiusToSegments();
-    radToDeg();
-    align();
-    center();
-    centerX();
-    centerY();
-    centerZ();
-    mirror();
-    mirrorX();
-    mirrorY();
-    mirrorZ();
-    rotate();
-    rotateX();
-    rotateY();
-    rotateZ();
-    scale();
-    scaleX();
-    scaleY();
-    scaleZ();
-    transform();
-    translate();
-    translateX();
-    translateY();
-    translateZ();
-    extrudeFromSlices();
-    extrudeHelical();
-    extrudeLinear();
-    extrudeRectangular();
-    extrudeRotate();
-    project();
-    intersect();
-    subtract();
-    union();
+arc,
+circle,
+cube,
+cuboid,
+cylinder,
+cylinderElliptic,
+ellipse,
+ellipsoid,
+geodesicSphere,
+line,
+polygon,
+polyhedron,
+rectangle,
+roundedCuboid,
+roundedCylinder,
+roundedRectangle,
+sphere,
+square,
+star,
+torus,
+triangle,
+areAllShapesTheSameType,
+degToRad,
+flatten,
+fnNumberSort,
+insertSorted,
+radiusToSegments,
+radToDeg,
+align,
+center,
+centerX,
+centerY,
+centerZ,
+mirror,
+mirrorX,
+mirrorY,
+mirrorZ,
+rotate,
+rotateX,
+rotateY,
+rotateZ,
+scale,
+scaleX,
+scaleY,
+scaleZ,
+transform,
+translate,
+translateX,
+translateY,
+translateZ,
+extrudeFromSlices,
+extrudeHelical,
+extrudeLinear,
+extrudeRectangular,
+extrudeRotate,
+project,
+intersect,
+subtract,
+union;
+console.log('Prevent tree shaking');
 }
 preventTreeShaking();
 
