@@ -1,0 +1,163 @@
+---
+import Loading from "./Loading.astro"
+    interface Props {
+	    ref: string;
+
+    }
+
+    const { ref } = Astro.props;
+
+---
+
+<Loading></Loading>
+<div id="visor" data-ref={ref} class=" absolute z-[-2] w-full h-full"></div>
+
+<script>
+    import * as THREE from 'three';
+    import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+    import { geom3ToBufferGeometry } from '../js/gm3tobuffer.js'
+
+
+    const $visor = document.getElementById('visor');
+    const ref = $visor?.getAttribute('data-ref');
+
+    var rendered = false
+
+    let w = window.innerWidth;
+    let h = window.innerHeight;
+
+    const scene = new THREE.Scene();
+
+    const camera = new THREE.PerspectiveCamera(75, w / h, 0.1, 1000);
+    camera.position.z = 5;
+    scene.add(camera);
+
+    const renderer = new THREE.WebGLRenderer();
+    renderer.setSize(w, h);
+    renderer.setClearColor(0x121212, .1);
+
+    renderer.domElement.style.borderRadius = "10px";
+    $visor?.appendChild(renderer.domElement);
+    
+
+    //añadimos la luz
+    const light = new THREE.DirectionalLight(0xffffff, 1);
+    const light2 = new THREE.DirectionalLight(0xffffff, 1);
+    light.rotateOnAxis(new THREE.Vector3(1, 0, 0), -Math.PI/1.5);
+    light.translateY(-3);
+    light.translateZ(0);
+    light2.rotateOnAxis(new THREE.Vector3(1, 0, 0), -Math.PI/1.5);
+    light2.translateY(3);
+    light2.translateZ(3);
+
+    scene.add(light);
+    scene.add(light2);
+   
+    //añadimos los controles
+    let controls = new OrbitControls(camera, renderer.domElement);
+
+    const animate = () => {
+        requestAnimationFrame(animate);
+        var $loader = document.getElementById('loading');
+        renderer.render(scene, camera);
+        if($loader){
+            if(!rendered){
+                $loader.remove();
+                rendered = true;
+            }
+                
+        }
+        
+    };
+
+    function resize() {
+        w = window.innerWidth;
+        h = window.innerHeight;
+        camera.aspect = w / h;
+        camera.updateProjectionMatrix();
+        renderer.setSize(w, h);
+    }
+
+    function createObject(src : Object){
+        scene.clear();
+
+        //añadimos la luz
+        const light = new THREE.DirectionalLight(0xffffff, 1);
+        const light2 = new THREE.DirectionalLight(0xffffff, 1);
+        light.rotateOnAxis(new THREE.Vector3(1, 0, 0), -Math.PI/1.5);
+        light.translateY(-3);
+        light.translateZ(0);
+        light2.rotateOnAxis(new THREE.Vector3(1, 0, 0), -Math.PI/1.5);
+        light2.translateY(3);
+        light2.translateZ(3);
+
+        scene.add(light);
+        scene.add(light2);
+        
+        var bufferGeometry   
+        try {
+            cleanError()
+            bufferGeometry = geom3ToBufferGeometry(src);
+        } catch (error) {
+            throw new Error('No se ha podido renderizar el objeto porque no contiene polígonos');
+        }
+
+        var material = new THREE.MeshPhongMaterial( { color: 0xffffff});
+        var mesh = new THREE.Mesh( bufferGeometry, material );
+
+        mesh.rotateOnAxis(new THREE.Vector3(1, 0, 0), -Math.PI / 2);
+        mesh.translateX(-3);
+        mesh.scale.set(0.1, 0.1, 0.1);
+        scene.add(mesh);
+    }
+
+    animate();
+
+    function executeCode(event : any) {
+        try {
+            const obj = event.detail;
+            noDisplay();
+            //console.log(obj);
+            
+            //load();
+            createObject(obj);
+            rendered = false
+
+
+        } catch(error) {
+            rendered=false;
+            createError(error);
+        }
+    }
+
+    function createError(error : any){
+        var errorLog = document.getElementById('ErrorMessage');
+        cleanError();
+        errorLog?.style.setProperty('display', 'flex');
+        if (error instanceof Error) {
+            console.error(error);
+            errorLog?.appendChild(document.createTextNode(error.message));
+        } else {
+            errorLog?.appendChild(document.createTextNode('An error occurred.'));
+        }   
+    }
+
+    function cleanError(){
+        var errorLog = document.getElementById('ErrorMessage');
+        if(errorLog){
+            if(errorLog.firstChild !== errorLog.lastChild)
+            if(errorLog.lastChild?.nodeType === 3) 
+                errorLog.removeChild(errorLog.lastChild);
+            
+        }
+    }
+
+    function noDisplay(){
+        var errorLog = document.getElementById('ErrorMessage');
+        errorLog?.style.setProperty('display', 'none');
+    }
+
+    document.addEventListener('code', executeCode);
+
+    window.addEventListener('resize', resize);
+</script>

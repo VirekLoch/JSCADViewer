@@ -1,0 +1,140 @@
+<div class="absolute w-fit h-full right-0 flex">
+    <button class="left-2/4 h-fit animate-iteration-count-1 border-white border-2 rounded-lg m-2" id="button">
+    
+        <svg class="w-8 h-8 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m8 8-4 4 4 4m8 0 4-4-4-4m-2-3-4 14"/>
+        </svg>
+          
+    </button>
+    <div id="editor"></div>
+    </div>
+    
+    <script>
+        import * as monaco from 'monaco-editor'
+        import JsWorker from 'monaco-editor/esm/vs/language/typescript/ts.worker?worker';
+        import LanguageCompletion from '../data/LanguageCompletion.js'
+        import EditorWorker from 'monaco-editor/esm/vs/editor/editor.worker?worker';
+        const editorElement = document.getElementById('editor');
+    
+        window.MonacoEnvironment = {
+            getWorker(_, label) {
+                if (label === 'typescript' || label === 'javascript') {
+                    return new JsWorker();
+                }
+                return new EditorWorker();
+            }
+        };
+        var editor : any
+        if(editorElement)
+        editor = monaco.editor.create(editorElement, {
+            language: 'javascript',
+            fontSize: 16,
+            theme: 'vs-dark',
+            automaticLayout: true,
+            minimap: {
+                enabled: false
+            },
+            fixedOverflowWidgets: true,
+            scrollBeyondLastLine: false,
+            roundedSelection: false,
+            padding: {
+                top: 16
+            }
+        })
+    
+        monaco.editor.defineTheme('vs-dark', {
+            base: 'vs-dark',
+            inherit: true,
+            rules: [],
+            colors: {
+                'editor.background': '#1e1e1e60',
+                'editor.foreground': '#d4d4d6',
+                'editor.focusBorder': '#ffffff00',
+                'editor.lineHighlightBackground': '#2A2A2A61',
+                'editorSuggestWidget.background': '#1e1e1e',
+                'editorSuggestWidget.textHighlightBackground': '#ADD6FF3361',
+                'editorSuggestWidget.border': '#45454561',
+                'editorSuggestWidget.foreground': '#d4d4d461',
+                'editorWidget.border': '#45454561',
+                'editorWidget.foreground': '#d4d4d461',
+                'focusBorder': '#ffffff00',
+    
+            }
+        })
+    
+    
+        // Define a function to provide custom suggestions
+    function provideCustomSuggestions(model: monaco.editor.ITextModel, position: monaco.Position, context: monaco.languages.CompletionContext): monaco.languages.ProviderResult<monaco.languages.CompletionList> {
+        // Get the word at the current position
+        const wordAtPosition = model.getWordUntilPosition(position);
+    
+        // Here you can implement logic to generate custom suggestions based on the word at the current position
+        // For demonstration purposes, let's provide suggestions for a few lodash functions
+        const suggestions = LanguageCompletion.map(item => ({
+            ...item,
+            kind: monaco.languages.CompletionItemKind.Method,
+            range: {
+                startLineNumber: position.lineNumber,
+                startColumn: wordAtPosition.startColumn,
+                endLineNumber: position.lineNumber,
+                endColumn: wordAtPosition.endColumn
+            }
+        }));
+    
+        return {
+            suggestions: suggestions
+        };
+    }
+    
+    // Register the custom completion item provider for JavaScript
+    monaco.languages.registerCompletionItemProvider('javascript', {
+        provideCompletionItems: provideCustomSuggestions
+    });
+    
+    
+        document.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter' && e.shiftKey) {
+                    e.preventDefault();
+                    document.getElementById("marco")?.setAttribute("srcdoc", editor.getValue());
+                    const event = new CustomEvent('mensajeNOVA', { detail: "cambio" });
+                    document.dispatchEvent(event);
+    
+                    const code = editor.getValue();
+                    window.history.replaceState(null, '',`#${btoa(code)}`)
+                }
+            });
+    
+    
+     function init(){
+        const pathname = window.location.hash;
+    
+        if(pathname){
+            editor.setValue(atob(pathname.slice(1)));
+            document.getElementById("marco")?.setAttribute("srcdoc", editor.getValue());
+        }
+     
+     }
+    
+     init();
+    </script>
+    
+    <style>
+        #editor {
+            margin-right: 0;
+            float: right;
+            width: 40vw;
+            height: 100vh;
+            padding: 0;
+            transition: width 1s;
+        }
+    
+        #editor.cambio {
+            width: 0vh;
+        }
+        .monaco-editor{
+            width: auto;
+            --vscode-focusBorder: #ffffff;
+        }
+    
+        
+    </style>

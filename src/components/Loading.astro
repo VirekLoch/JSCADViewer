@@ -1,0 +1,28 @@
+<div id="loading" class=" absolute top-0 left-0 w-full h-full bg-neutral-500 "><div class="loader"></div>
+</div>
+
+<style is:global>
+    #loading {
+        background-color: rgba(19,19,26, 0.1);
+        z-index: 1000;
+    }
+    .loader {
+    margin: 0 auto;
+    margin-top: 40vh;
+    width: 70px;
+    padding: 8px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: #25b09b;
+    --_m: 
+        conic-gradient(#0000 10%,#000),
+        linear-gradient(#000 0 0) content-box;
+    -webkit-mask: var(--_m);
+            mask: var(--_m);
+    -webkit-mask-composite: source-out;
+            mask-composite: subtract;
+    animation: l3 1s infinite linear;
+    }
+    @keyframes l3 {to{transform: rotate(1turn)}}
+
+</style>

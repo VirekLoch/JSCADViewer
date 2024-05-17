@@ -1,0 +1,75 @@
+---
+import Code from '../components/CodingArea.astro';
+import Error from '../components/ErrorPop.astro';
+import View from '../components/FullViewVisor.astro';
+import RenderComponent from '../components/RenderComponent.astro'; //procesador de doc
+import IconSet from '../components/IconSet.astro';
+import Header from './LeftHeader.astro';
+
+---
+<!--
+<Visor ref="cutter.js" data_imports={8}/>
+ -->
+
+<head>
+    <meta charset="UTF-8">
+</head>
+<div class="absolute top-0 z-[-2] h-screen w-screen bg-neutral-950 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))]"></div>
+<Header/>
+<View ref="var hola"/>
+<Code />
+
+<Error/>
+
+<div class="flex row-auto absolute bottom-4 right-2">
+    <div id="dos" class="flex">
+        <IconSet>Shift</IconSet><IconSet>&#9166</IconSet>
+    </div>
+    <div id="uno"  class="absolute w-max right-0 -top-full">
+        <IconSet>ⓘ Press SHIFT + &#9166 to render</IconSet>
+    </div>
+
+</div>
+<div id="errorLog" class="absolute bottom-4 left-1/2 -translate-x-1/2 text-neutral-200 opacity-0"> <IconSet color='#e9595d'>ⓘ Error</IconSet></div>
+<RenderComponent/>
+
+<script>
+    
+    const button = document.getElementById('button');
+    const editor = document.getElementById('editor');
+    button?.addEventListener('click', () => {
+
+        if(editor?.classList.contains('cambio')) {
+            button?.classList.add('animate-rotate-180')
+            editor?.classList.remove('cambio');
+            button?.classList.remove('animate-rotate-180')
+
+
+        }else{
+            button?.classList.add('animate-rotate-180')
+            editor?.classList.add('cambio');
+
+        }
+        
+    });
+</script>
+
+<style>
+    body{
+        background-color: neutral-950;
+        background: radial-gradient(ellipse 80% 80% at 50% -20%, rgba(120, 119, 198, 0.3), rgba(255, 255, 255, 0));
+        overflow: hidden;
+    }
+
+    #dos:hover ~ #uno{
+        visibility: visible;
+    }
+    #uno{
+        visibility: hidden;
+        transition:all 0.2s;
+    }
+    #errorLog{
+        transition:all 0.2s;
+    }
+
+</style>
