@@ -71,6 +71,7 @@ subtract,
 union
 } from "@jscad/modeling/src/operations/booleans";
 
+console.log(sphere({radius: 10}));
 
 function handleMessageFromChild(event ) {
     var txt = document.getElementById('marco')?.getAttribute("srcdoc");
