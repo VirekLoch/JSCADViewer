@@ -70,69 +70,86 @@ intersect,
 subtract,
 union
 } from "@jscad/modeling/src/operations/booleans";
-
 function preventTreeShaking() {
-arc,
-circle,
-cube,
-cuboid,
-cylinder,
-cylinderElliptic,
-ellipse,
-ellipsoid,
-geodesicSphere,
-line,
-polygon,
-polyhedron,
-rectangle,
-roundedCuboid,
-roundedCylinder,
-roundedRectangle,
-sphere,
-square,
-star,
-torus,
-triangle,
-areAllShapesTheSameType,
-degToRad,
-flatten,
-fnNumberSort,
-insertSorted,
-radiusToSegments,
-radToDeg,
-align,
-center,
-centerX,
-centerY,
-centerZ,
-mirror,
-mirrorX,
-mirrorY,
-mirrorZ,
-rotate,
-rotateX,
-rotateY,
-rotateZ,
-scale,
-scaleX,
-scaleY,
-scaleZ,
-transform,
-translate,
-translateX,
-translateY,
-translateZ,
-extrudeFromSlices,
-extrudeHelical,
-extrudeLinear,
-extrudeRectangular,
-extrudeRotate,
-project,
-intersect,
-subtract,
-union;
-console.log('Prevent tree shaking');
+    const primitives = [
+        arc,
+        circle,
+        cube,
+        cuboid,
+        cylinder,
+        cylinderElliptic,
+        ellipse,
+        ellipsoid,
+        geodesicSphere,
+        line,
+        polygon,
+        polyhedron,
+        rectangle,
+        roundedCuboid,
+        roundedCylinder,
+        roundedRectangle,
+        sphere,
+        square,
+        star,
+        torus,
+        triangle
+    ];
+
+    const utils = [
+        areAllShapesTheSameType,
+        degToRad,
+        flatten,
+        fnNumberSort,
+        insertSorted,
+        radiusToSegments,
+        radToDeg
+    ];
+
+    const transforms = [
+        align,
+        center,
+        centerX,
+        centerY,
+        centerZ,
+        mirror,
+        mirrorX,
+        mirrorY,
+        mirrorZ,
+        rotate,
+        rotateX,
+        rotateY,
+        rotateZ,
+        scale,
+        scaleX,
+        scaleY,
+        scaleZ,
+        transform,
+        translate,
+        translateX,
+        translateY,
+        translateZ
+    ];
+
+    const extrusions = [
+        extrudeFromSlices,
+        extrudeHelical,
+        extrudeLinear,
+        extrudeRectangular,
+        extrudeRotate,
+        project
+    ];
+
+    const booleans = [
+        intersect,
+        subtract,
+        union
+    ];
+
+    
+
+    console.log('Prevent tree shaking using', primitives, utils, transforms, extrusions, booleans);
 }
+
 preventTreeShaking();
 
 function handleMessageFromChild(event ) {
